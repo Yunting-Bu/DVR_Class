@@ -56,9 +56,9 @@ This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can u
 In `DVR_test.f90`, we provide three examples.
 ### 1D Harmonic Oscillator
 Potential function: 
-$$
+```math
 V(x) = \frac{1}{2} m\omega^2 x^2
-$$
+```
 where $m=1, \omega=1$, the results are:
 ```
 Harmonic Oscillator Eigenenergies in Hartree:
@@ -72,9 +72,9 @@ n =    5  E_DVR =        5.50000
 ![](./pic/Harmonic.png)
 ### Morse Potential for $\mathrm{H}_2$
 Potential function: 
-$$
+```math
 V(x) = D_e(1-\mathrm{e}^{-\alpha(x-r_e)})^2
-$$
+```
 where $De=4.7446eV, r_e=0.7416\AA, \alpha=1.9426\AA^{-1}$, the results are:
 ```
 Morse Potential Eigenenergies for H2 in eV:
@@ -88,9 +88,9 @@ n =    5  E_DVR =        2.52417
 ![](./pic/Morse.png)
 ### 2D Henon-Heiles Potential
 Potential function:
-$$
+```math
 V(x,y)=\frac{1}{2}(x^2+y^2)+\sqrt{0.0125}(x^2y-\frac{1}{3}y^3)
-$$
+```
 the results are:
 ```
 Henon-Heiles Potential Eigenenergies in Hartree:
