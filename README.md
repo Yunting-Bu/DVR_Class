@@ -1,5 +1,5 @@
 # DVR Class
-This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can use this module in your code to calculate DVR wavefunctions and eigenvalues after defining the potential function
+This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can use this module in your code to calculate DVR wavefunctions and eigenvalues after defining the potential function.
 
 ## Dependencies
 
@@ -10,9 +10,10 @@ This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can u
 1. You need to define the **potential function**, like:
     ```Fortran
     function harmonic(x) result(res)
-        real(8), intent(in) :: x
-        real(8) :: res
-        res = 0.5D0 * x**2
+        use, intrinsic :: iso_fortran_env, only : f8 => real64
+        real(kind=f8), intent(in) :: x
+        real(kind=f8) :: res
+        res = 0.5_f8 * x**2
     end function 
     ```
 2. State the DVR_Class type, like
@@ -23,9 +24,9 @@ This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can u
 
     **GridsNumber**: the number of grids, `Integer`
 
-    **lefta, rightb**: The interval [a,b], `Real(8)`
+    **lefta, rightb**: The interval [a,b], `Real64`
 
-    **MassInAU**: reduced mass in a.u., `Real(8)`
+    **MassInAU**: reduced mass in a.u., `Real64`
 
     **potential**: potential function
 
@@ -44,11 +45,11 @@ This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can u
     ```
     You can access the following information: 
 
-    |T|V|H|C|E|grid|weight|TransMat|
-    |-|-|-|-|-|----|------|--------|
-    |Kinetic Matrix|Potential Matrix|Hamiltonian Matrix|Coefficient Matrix|Eigenenergies|Grids|weight|Transform Matrix|
-    |ngrid*ngrid|ngrid*ngrid|ngrid*ngrid|ngrid*ngrid|ngrid|ngrid|-|ngrid*ngrid|
-    |Real(8)|Real(8)|Real(8)|Real(8)|Real(8)|Real(8)|Real(8)|Real(8)|
+    |T|V|H|C|E|grid|weight|TransMat|ngrid|
+    |-|-|-|-|-|----|------|--------|-----|
+    |Kinetic Matrix|Potential Matrix|Hamiltonian Matrix|Coefficient Matrix|EigenEnergies|Grids|weight|Transform Matrix|Number of grids|
+    |ngrid*ngrid|ngrid*ngrid|ngrid*ngrid|ngrid*ngrid|ngrid|ngrid|-|ngrid*ngrid|-|
+    |Real64|Real64|Real64|Real64|Real64|Real64|Real64|Real64|Integer|
 
     **NOTE**: `C` is not the eigenvector of `H`, it equals to the eigenvector divided by the square root of the weights.
 
@@ -56,9 +57,9 @@ This is a 1D DVR (Discrete Variable Representation) class for Fortran. You can u
 In `DVR_test.f90`, we provide three examples.
 ### 1D Harmonic Oscillator
 Potential function: 
-$$
+```math
 V(x) = \frac{1}{2} m\omega^2 x^2
-$$
+```
 where $m=1, \omega=1$, the results are:
 ```
 Harmonic Oscillator Eigenenergies in Hartree:
@@ -72,9 +73,9 @@ n =    5  E_DVR =        5.50000
 ![](./pic/Harmonic.png)
 ### Morse Potential for $\mathrm{H}_2$
 Potential function: 
-$$
+```math
 V(x) = D_e(1-\mathrm{e}^{-\alpha(x-r_e)})^2
-$$
+```
 where $De=4.7446eV, r_e=0.7416\AA, \alpha=1.9426\AA^{-1}$, the results are:
 ```
 Morse Potential Eigenenergies for H2 in eV:
@@ -88,9 +89,9 @@ n =    5  E_DVR =        2.52417
 ![](./pic/Morse.png)
 ### 2D Henon-Heiles Potential
 Potential function:
-$$
+```math
 V(x,y)=\frac{1}{2}(x^2+y^2)+\sqrt{0.0125}(x^2y-\frac{1}{3}y^3)
-$$
+```
 the results are:
 ```
 Henon-Heiles Potential Eigenenergies in Hartree:

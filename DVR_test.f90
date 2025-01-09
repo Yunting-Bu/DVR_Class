@@ -1,31 +1,36 @@
 program DVR_Test
   use DVR1d
+  use, intrinsic :: iso_fortran_env, only : f8 => real64
   implicit none
 
-  real(8) :: au2ev = 27.2114d0
-  real(8) :: dalton2au = 1822.888486209d0
-  real(8) :: m = 0.50391d0
+  real(kind=f8), parameter :: au2ev = 27.2114_f8
+  real(kind=f8), parameter :: dalton2au = 1822.888486209_f8
+  real(kind=f8), parameter :: m = 0.50391_f8
 
     interface
         function harmonic(x) result(res)
-            real(8), intent(in) :: x
-            real(8) :: res
+            import :: f8
+            real(kind=f8), intent(in) :: x
+            real(kind=f8) :: res
         end function 
 
         function morse(x) result(res)
-            real(8), intent(in) :: x
-            real(8) :: res
-            real(8) :: De, re, a
+            import :: f8
+            real(kind=f8), intent(in) :: x
+            real(kind=f8) :: res
+            real(kind=f8) :: De, re, a
         end function 
 
         function heiles_x(x) result(res)
-            real(8), intent(in) :: x
-            real(8) :: res
+            import :: f8
+            real(kind=f8), intent(in) :: x
+            real(kind=f8) :: res
         end function
 
         function heiles_y(y) result(res)
-            real(8), intent(in) :: y
-            real(8) :: res
+            import :: f8
+            real(kind=f8), intent(in) :: y
+            real(kind=f8) :: res
         end function
     end interface
 
@@ -40,10 +45,10 @@ program DVR_Test
 
 !------Harmonic------!
   ngrid = 50
-  lefta = -10.0D0
-  rightb = 10.0D0
+  lefta = -10.0_f8
+  rightb = 10.0_f8
 
-  call dvr_harmonic%DVR_init(ngrid, lefta, rightb, 1.0d0, harmonic)
+  call dvr_harmonic%DVR_init(ngrid, lefta, rightb, 1.0_f8, harmonic)
   call dvr_harmonic%DVR_matrix_calc()
   call dvr_harmonic%DVR_diagH()
   
@@ -60,8 +65,8 @@ program DVR_Test
 
 !------Morse------!
   ngrid = 100
-  lefta = -1.0D0
-  rightb = 6.0D0
+  lefta = -1.0_f8
+  rightb = 6.0_f8
   call dvr_morse%DVR_init(ngrid, lefta, rightb, m*dalton2au, morse)
   call dvr_morse%DVR_matrix_calc()
   call dvr_morse%DVR_diagH()
@@ -79,11 +84,11 @@ program DVR_Test
 
 !------Henon-Heiles------!
 
-  call dvr_heiles_x%DVR_init(50, -5.0D0, 5.0D0, 1.0d0, heiles_x)
+  call dvr_heiles_x%DVR_init(50, -5.0_f8, 5.0_f8, 1.0_f8, heiles_x)
   call dvr_heiles_x%DVR_matrix_calc()
   call dvr_heiles_x%DVR_diagH()
 
-  call dvr_heiles_y%DVR_init(50, -5.0D0, 5.0D0, 1.0d0, heiles_y)
+  call dvr_heiles_y%DVR_init(50, -5.0_f8, 5.0_f8, 1.0_f8, heiles_y)
   call dvr_heiles_y%DVR_matrix_calc()
   call dvr_heiles_y%DVR_diagH()
 
@@ -110,30 +115,34 @@ program DVR_Test
 end program DVR_Test
 
 function harmonic(x) result(res)
-    real(8), intent(in) :: x
-    real(8) :: res
-    res = 0.5D0 * x**2
+  use, intrinsic :: iso_fortran_env, only : f8 => real64
+    real(kind=f8), intent(in) :: x
+    real(kind=f8) :: res
+    res = 0.5_f8 * x**2
 end function 
 
 function morse(x) result(res)
-    real(8), intent(in) :: x
-    real(8) :: De, re, a
-    real(8) :: res
-    De = 4.7446d0 / 27.2114d0
-    re = 0.7416d0 * 1.88973d0
-    a = 1.9426d0 / 1.88973d0
-    res = De * (1.0d0 - exp(-a * (x - re)))**2
+  use, intrinsic :: iso_fortran_env, only : f8 => real64
+    real(kind=f8), intent(in) :: x
+    real(kind=f8) :: De, re, a
+    real(kind=f8) :: res
+    De = 4.7446_f8 / 27.2114_f8
+    re = 0.7416_f8 * 1.88973_f8
+    a = 1.9426_f8 / 1.88973_f8
+    res = De * (1.0_f8 - exp(-a * (x - re)))**2
 end function
 
 function heiles_x(x) result(res)
-    real(8), intent(in) :: x
-    real(8) :: res
-    res = 0.5d0 * x**2
+  use, intrinsic :: iso_fortran_env, only : f8 => real64
+    real(kind=f8), intent(in) :: x
+    real(kind=f8) :: res
+    res = 0.5_f8 * x**2
 end function
 
 function heiles_y(y) result(res)
-    real(8), intent(in) :: y
-    real(8) :: res
-    res = 0.5d0 * y**2 + sqrt(0.0125d0)*(-0.333d0*y**3)
+  use, intrinsic :: iso_fortran_env, only : f8 => real64
+    real(kind=f8), intent(in) :: y
+    real(kind=f8) :: res
+    res = 0.5_f8 * y**2 + sqrt(0.0125_f8)*(-0.333_f8*y**3)
 end function
 
